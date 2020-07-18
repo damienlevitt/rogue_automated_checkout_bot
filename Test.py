@@ -9,7 +9,7 @@ import time
 # We will make the webdriver location a variable "browser"
 # Make sure you have the webdriver for your browser downloaded.
 
-browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automation_bot\chromedriver')
+browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automated_checkout_bot\chromedriver')
 
 # Now you must specify your URL for your desired website using the 'get' function.
 
@@ -34,7 +34,7 @@ add.click()
 # The checkout page should appear, now we must click checkout.
 
 checkout = browser.find_element_by_class_name('v-btn-checkout-button')
-
+time.sleep(.5)
 checkout.click()
 
 
