@@ -8,8 +8,9 @@ import time
 first_name = 'Ricky'
 last_name = 'Bobby'
 address = '1234 Something Lane'
+state = 'CA'
 city = 'San Jose'
-zipcode = '95112'
+zipcode = '95219'
 telephone_number = '408999999'
 email = 'jondoe@gmail.com'
 
@@ -42,25 +43,18 @@ add.click()
 
 # The checkout page should appear, now we must click checkout.
 
-checkout_button = browser.find_element_by_class_name('v-btn-checkout-button')
+checkout = browser.find_element_by_class_name('v-btn-checkout-button')
 time.sleep(.5)
-checkout_button.click()
+checkout.click()
 
 # This should bring you to the checkout method screen. We will pick checkout as guest.
-# Added delay for page to refresh fully.
 
-checkout = 0
-while checkout is not 1:
-    checkout_guest = browser.find_element_by_xpath("//button[text()= 'Checkout as Guest']")
-    checkout_guest.click()
-    checkout = 1
-else:
-    time.sleep(.5)
-
+checkout_guest = browser.find_element_by_xpath("//button[text()= 'Checkout as Guest']")
+checkout_guest.click()
 
 # This should bring you to the shipping information page and autofill information you defined at beginning.
 
-time.sleep(3)
+time.sleep(5)
 first_name_field = browser.find_element_by_name('firstname')
 first_name_field.send_keys(first_name)
 
@@ -83,22 +77,19 @@ zip_code_field.send_keys(zipcode)
 telephone_field = browser.find_element_by_name('telephone')
 telephone_field.send_keys(telephone_number)
 
-email_done = 0
-while email_done is not 1:
-    email_field = browser.find_element_by_id('checkout:email')
-    email_field.send_keys(email)
-    email_done = 1
-else:
-    time.sleep(.5)
+email_field = browser.find_element_by_id('checkout:email')
+email_field.send_keys(email)
 
-# The shipping page should be filled out now. Next we view shipping options.
+time.sleep(7)
+shipping_page_button = browser.find_element_by_xpath("//button[text()= 'View Shipping Options']")
+shipping_page_button.click()
 
-shipping_option_button = browser.find_element_by_xpath("//button[text()= 'View Shipping Options']")
-shipping_option_button.click()
+time.sleep(3)
+confirm_ship_button = browser.find_element_by_xpath("//button[text()= 'Continue with this address']")
+confirm_ship_button.click()
 
-
-
-
+continue_to_payment_button = browser.find_element_by_xpath("//button[text()= 'Continue to Payment']")
+continue_to_payment_button.click()
 
 
 
