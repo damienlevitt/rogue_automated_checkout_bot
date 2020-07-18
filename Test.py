@@ -34,8 +34,16 @@ add.click()
 # The checkout page should appear, now we must click checkout.
 
 checkout = browser.find_element_by_class_name('v-btn-checkout-button')
-time.sleep(.5)
+time.sleep(.3)
 checkout.click()
+
+# This should bring you to the checkout method screen. We will pick checkout as guest.
+
+checkout_guest = browser.find_element_by_xpath("//button[text()= 'Checkout as Guest']")
+time.sleep(.3)
+checkout_guest.click()
+
+
 
 
 
