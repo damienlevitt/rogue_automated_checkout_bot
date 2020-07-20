@@ -58,8 +58,10 @@ if __name__ == '__main__':
 
 # The checkout page should appear, now we must click checkout.
 
-    checkout = browser.find_element_by_class_name('v-btn-checkout-button')
-    time.sleep(.5)
+    checkout = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
+        (By.CSS_SELECTOR, '#side-cart > div > div.off-canvas-footer > div:nth-child(1) > div.v-col-8 > button')))
+    # checkout = browser.find_element_by_class_name('v-btn-checkout-button')
+    # time.sleep(.5)      Optimized to avoid waiting by using wait until element clickable
     checkout.click()
 
 # This should bring you to the checkout method screen. We will pick checkout as guest.
@@ -69,8 +71,9 @@ if __name__ == '__main__':
 
     # This should bring you to the shipping information page and autofill information you defined at beginning.
 
-    time.sleep(5)
-    first_name_field = browser.find_element_by_name('firstname')
+    # time.sleep(5)
+    first_name_field = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.NAME, 'firstname')))
+    # first_name_field = browser.find_element_by_name('firstname')
     first_name_field.send_keys(first_name)
 
     last_name_field = browser.find_element_by_name('lastname')
@@ -94,22 +97,31 @@ if __name__ == '__main__':
 
     email_field = browser.find_element_by_id('checkout:email')
     email_field.send_keys(email)
-    time.sleep(10)
+    time.sleep(1)
 
-    shipping_page_button = browser.find_element_by_xpath('//button[text()= "View Shipping Options"]')
-    shipping_page_button.click()
-    time.sleep(7)
+    view_shipping_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
+        (By.XPATH, '//button[text()= "View Shipping Options"]')))
+    # view_shipping_button = browser.find_element_by_xpath('//button[text()= "View Shipping Options"]')
+    view_shipping_button.click()
+    # time.sleep(7)
 
-    confirm_ship_button = browser.find_element_by_xpath("//button[text()= 'Continue with this address']")
+    confirm_ship_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
+        (By.XPATH, '//button[text()= "Continue with this address"]')))
+    # confirm_ship_button = browser.find_element_by_xpath("//button[text()= 'Continue with this address']")
     confirm_ship_button.click()
 
     continue_to_payment_button = browser.find_element_by_xpath("//button[text()= 'Continue to Payment']")
     continue_to_payment_button.click()
-    time.sleep(5)
+    # time.sleep(5)
 
-    curr_frame = browser.find_element_by_xpath(
-        '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.49"]')
+    curr_frame = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
+        (By.XPATH, '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.49"]')))
+    # curr_frame = browser.find_element_by_xpath(
+    #     '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.49"]')
     browser.switch_to.frame(curr_frame)
+
+    # card_number_field = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.ID, 'card_number')))
+
     card_number_field = browser.find_element_by_id('card_number')
     card_number_field.send_keys(card_number)
 
@@ -129,11 +141,16 @@ if __name__ == '__main__':
     expire_year_field = browser.find_element_by_id('expirationyear')
     expire_year_field.send_keys(exp_year)
 
-    time.sleep(.5)
-    review_button = browser.find_element_by_xpath('//button[text()= "Continue to Review"]')
+    # time.sleep(.5)
+    review_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
+        (By.XPATH, '//button[text()= "Continue to Review"]')))
+    # review_button = browser.find_element_by_xpath('//button[text()= "Continue to Review"]')
     review_button.click()
 
-    time.sleep(2)
-
-    place_order_button = browser.find_element_by_css_selector("#checkout > div > div.funneled-layout-content > div:nth-child(2) > div.add-shipping-address-container > div > div.main-checkout-col.main-checkout-col-right > button")
+    # time.sleep(2)
+    place_order_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#checkout > div > div.funneled-layout-content > div:nth-child(2) > div.add-shipping-address-container > div > "
+        "div.main-checkout-col.main-checkout-col-right > button")))
+    # place_order_button = browser.find_element_by_css_selector(
+    #     "#checkout > div > div.funneled-layout-content > div:nth-child(2) > div.add-shipping-address-container > div > "
+    #     "div.main-checkout-col.main-checkout-col-right > button")
     place_order_button.click()
