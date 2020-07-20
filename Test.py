@@ -10,23 +10,24 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 # Info from Rogue Website
-product = 'grouped-product-item-35913'
-URL = 'https://www.roguefitness.com/rogue-kg-fractional-plates'
+product = ('grouped-product-item-75737', 'grouped-product-item-75739', 'grouped-product-item-75741')
+    # ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-85745', 'grouped-product-item-85741')
+URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
 
 
 # Personal Checkout Info
-first_name = 'Ricky'
-last_name = 'Bobby'
+first_name = 'FIRSTNAME'
+last_name = 'LASTNAME'
 address = '1234 Something Lane'
 state = 'CA'
 city = 'San Jose'
 zipcode = '95219'
-telephone_number = '408999999'
+telephone_number = '4089999999'
 email = 'jondoe@gmail.com'
 card_number = '4111111111111111'
-exp_month = '2'
+exp_month = '7'
 exp_year = '2021'
-cvv = '201'
+cvv = '999'
 
 
 # Second you must specify the location of your browser executable.
@@ -37,16 +38,23 @@ def browser_init():
     browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automated_checkout_bot\chromedriver')
     browser.get(URL)
     return browser
-
 # Now we are going to find the field for the quantity wanted for the desired product.
+
+
 if __name__ == '__main__':
 
     browser = browser_init()
-    quantity = browser.find_element_by_id(product)
+    for i in product:
+        try:
+            quantity = browser.find_element_by_id(i)
+            quantity.send_keys('1')
+        except:
+            print("item", i, "was not in stock")
+            pass        # Will move on to the next item if one of the items is not in stock
 
 # Now we will use 'send_keys' to enter the desired amount into the text field.
 
-    quantity.send_keys('4')
+    # quantity.send_keys('1')
 
 # Now you will need to checkout by clicking add to cart. We will make the "add to cart" button an element.
 
@@ -120,9 +128,8 @@ if __name__ == '__main__':
     #     '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.49"]')
     browser.switch_to.frame(curr_frame)
 
-    # card_number_field = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.ID, 'card_number')))
-
-    card_number_field = browser.find_element_by_id('card_number')
+    card_number_field = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.ID, 'card_number')))
+    #card_number_field = browser.find_element_by_id('card_number')
     card_number_field.send_keys(card_number)
 
     browser.switch_to.default_content()
