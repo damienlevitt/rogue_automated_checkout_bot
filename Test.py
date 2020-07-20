@@ -1,4 +1,6 @@
-# First you must open the python console and enter:
+# This script requires you find the product item number of the desired item.
+# This can be done by inspecting the item in chrome and replacing the 5 digit number with that of your desired product.
+# The URL must be changed to the location of the desired product page.
 
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
@@ -8,8 +10,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 # Info from Rogue Website
-product = 'grouped-product-item-32811'
-URL = 'https://www.roguefitness.com/rogue-calibrated-kg-steel-plates'
+product = 'grouped-product-item-35913'
+URL = 'https://www.roguefitness.com/rogue-kg-fractional-plates'
 
 
 # Personal Checkout Info
