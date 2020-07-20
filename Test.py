@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
     email_field = browser.find_element_by_id('checkout:email')
     email_field.send_keys(email)
-    time.sleep(7)
+    time.sleep(10)
 
     shipping_page_button = browser.find_element_by_xpath('//button[text()= "View Shipping Options"]')
     shipping_page_button.click()
@@ -103,21 +103,29 @@ if __name__ == '__main__':
 
     continue_to_payment_button = browser.find_element_by_xpath("//button[text()= 'Continue to Payment']")
     continue_to_payment_button.click()
-    time.sleep(2)
+    time.sleep(5)
 
-    card_number_field = browser.find_element_by_xpath('card_number')
-    time.sleep(2)
+    curr_frame = browser.find_element_by_xpath(
+        '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.49"]')
+    browser.switch_to.frame(curr_frame)
+    card_number_field = browser.find_element_by_id('card_number')
     card_number_field.send_keys(card_number)
-    time.sleep(2)
 
-    expire_month_field = browser.find_element_by_id('//*[@id="expirationmonth"]')
+    browser.switch_to.default_content()
+
+    curr_frame = browser.find_element_by_xpath(
+        '//iframe[@src="https://core.spreedly.com/v1/embedded/cvv-frame.html?v=1.49"]')
+    browser.switch_to.frame(curr_frame)
+    cvv_field = browser.find_element_by_id('cvv')
+    cvv_field.send_keys(cvv)
+
+    browser.switch_to.default_content()
+
+    expire_month_field = browser.find_element_by_id('expirationmonth')
     expire_month_field.send_keys(exp_month)
 
-    expire_year_field = browser.find_element_by_id('//expirationyear')
+    expire_year_field = browser.find_element_by_id('expirationyear')
     expire_year_field.send_keys(exp_year)
-
-    cvv_field = browser.find_element_by_id('//cvv')
-    cvv_field.send_keys(cvv)
 
     time.sleep(.5)
     review_button = browser.find_element_by_xpath('//button[text()= "Continue to Review"]')
