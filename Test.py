@@ -21,7 +21,7 @@ city = 'San Jose'
 zipcode = '95219'
 telephone_number = '408999999'
 email = 'jondoe@gmail.com'
-card_number = '9999999999999999'
+card_number = '4111111111111111'
 exp_month = '2'
 exp_year = '2021'
 cvv = '201'
@@ -131,16 +131,7 @@ if __name__ == '__main__':
     review_button = browser.find_element_by_xpath('//button[text()= "Continue to Review"]')
     review_button.click()
 
+    time.sleep(2)
 
-
-
-
-
-
-
-
-
-
-
-
-
+    place_order_button = browser.find_element_by_css_selector("#checkout > div > div.funneled-layout-content > div:nth-child(2) > div.add-shipping-address-container > div > div.main-checkout-col.main-checkout-col-right > button")
+    place_order_button.click()
