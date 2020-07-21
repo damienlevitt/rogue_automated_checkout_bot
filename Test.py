@@ -10,9 +10,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 # Info from Rogue Website
-product = ('grouped-product-item-75737', 'grouped-product-item-75739', 'grouped-product-item-75741')
-    # ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-85745', 'grouped-product-item-85741')
-URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
+#product = ('grouped-product-item-75737', 'grouped-product-item-75739', 'grouped-product-item-75741')
+product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+# URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
+URL = 'https://www.roguefitness.com/rogue-fleck-plates'
 
 
 # Personal Checkout Info
