@@ -8,54 +8,61 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 import time
+
+
 # Info from Rogue Website
-#product = ('grouped-product-item-75737', 'grouped-product-item-75739', 'grouped-product-item-75741')
-product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
-# URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
-URL = 'https://www.roguefitness.com/rogue-fleck-plates'
+class WebpageInfo:
+    product = ('grouped-product-item-75737', 'grouped-product-item-75739', 'grouped-product-item-75741')
+    # product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+    URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
+    # URL = 'https://www.roguefitness.com/rogue-fleck-plates'
 
 
 # Personal Checkout Info
-first_name = 'FIRSTNAME'
-last_name = 'LASTNAME'
-address = '1234 Something Lane'
-state = 'CA'
-city = 'San Jose'
-zipcode = '95219'
-telephone_number = '4089999999'
-email = 'jondoe@gmail.com'
-card_number = '4111111111111111'
-exp_month = '7'
-exp_year = '2021'
-cvv = '999'
+class PersonalInfo:
+    first_name = 'FIRSTNAME'
+    last_name = 'LASTNAME'
+    address = '1234 Something Lane'
+    state = 'CA'
+    city = 'San Jose'
+    zipcode = '95219'
+    telephone_number = '4089999999'
+    email = 'jondoe@gmail.com'
+    card_number = '4111111111111111'
+    exp_month = '7'
+    exp_year = '2021'
+    cvv = '999'
 
 
 # Second you must specify the location of your browser executable.
 # We will make the webdriver location a variable "browser"
 # Make sure you have the webdriver for your browser downloaded.
 
-def browser_init():
+def webpage_status():
     browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automated_checkout_bot\chromedriver')
-    browser.get(URL)
-    return browser
-# Now we are going to find the field for the quantity wanted for the desired product.
+    browser.get(WebpageInfo.URL)
+    update = 0
+    while update == 0:
+        for x in WebpageInfo.product:
+            try:
+                element = browser.find_element_by_id(x)
+                if element.find_element_by_id(x) is not None:
+                    update = 1
+            except:
+                time.sleep(20)
+                browser.refresh()
 
 
-if __name__ == '__main__':
-
-    browser = browser_init()
-    for i in product:
+def rouge_checkout(browser):
+    for i in WebpageInfo.product:
         try:
             quantity = browser.find_element_by_id(i)
-            quantity.send_keys('1')
+            quantity.send_keys('1')                        # Change this to your desired quantity for each product
         except:
             print("item", i, "was not in stock")
             pass        # Will move on to the next item if one of the items is not in stock
-
-# Now we will use 'send_keys' to enter the desired amount into the text field.
-
-    # quantity.send_keys('1')
 
 # Now you will need to checkout by clicking add to cart. We will make the "add to cart" button an element.
 
@@ -83,29 +90,29 @@ if __name__ == '__main__':
     # time.sleep(5)
     first_name_field = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.NAME, 'firstname')))
     # first_name_field = browser.find_element_by_name('firstname')
-    first_name_field.send_keys(first_name)
+    first_name_field.send_keys(PersonalInfo.first_name)
 
     last_name_field = browser.find_element_by_name('lastname')
-    last_name_field.send_keys(last_name)
+    last_name_field.send_keys(PersonalInfo.last_name)
 
     address_field = browser.find_element_by_name('address')
-    address_field.send_keys(address)
+    address_field.send_keys(PersonalInfo.address)
 
     city_field = browser.find_element_by_name('city')
-    city_field.send_keys(city)
+    city_field.send_keys(PersonalInfo.city)
 
     state_field = browser.find_element_by_id('checkout:region_id')
     state_field.send_keys('CA')
     state_field.send_keys(Keys.ENTER)
 
     zip_code_field = browser.find_element_by_name('zip')
-    zip_code_field.send_keys(zipcode)
+    zip_code_field.send_keys(PersonalInfo.zipcode)
 
     telephone_field = browser.find_element_by_name('telephone')
-    telephone_field.send_keys(telephone_number)
+    telephone_field.send_keys(PersonalInfo.telephone_number)
 
     email_field = browser.find_element_by_id('checkout:email')
-    email_field.send_keys(email)
+    email_field.send_keys(PersonalInfo.email)
     time.sleep(1)
 
     view_shipping_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
@@ -131,7 +138,7 @@ if __name__ == '__main__':
 
     card_number_field = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.ID, 'card_number')))
     #card_number_field = browser.find_element_by_id('card_number')
-    card_number_field.send_keys(card_number)
+    card_number_field.send_keys(PersonalInfo.card_number)
 
     browser.switch_to.default_content()
 
@@ -139,15 +146,15 @@ if __name__ == '__main__':
         '//iframe[@src="https://core.spreedly.com/v1/embedded/cvv-frame.html?v=1.49"]')
     browser.switch_to.frame(curr_frame)
     cvv_field = browser.find_element_by_id('cvv')
-    cvv_field.send_keys(cvv)
+    cvv_field.send_keys(PersonalInfo.cvv)
 
     browser.switch_to.default_content()
 
     expire_month_field = browser.find_element_by_id('expirationmonth')
-    expire_month_field.send_keys(exp_month)
+    expire_month_field.send_keys(PersonalInfo.exp_month)
 
     expire_year_field = browser.find_element_by_id('expirationyear')
-    expire_year_field.send_keys(exp_year)
+    expire_year_field.send_keys(PersonalInfo.exp_year)
 
     # time.sleep(.5)
     review_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
@@ -162,3 +169,8 @@ if __name__ == '__main__':
     #     "#checkout > div > div.funneled-layout-content > div:nth-child(2) > div.add-shipping-address-container > div > "
     #     "div.main-checkout-col.main-checkout-col-right > button")
     place_order_button.click()
+    done = 1
+    return done
+
+if __name__ == '__main__':
+    webpage_status()
