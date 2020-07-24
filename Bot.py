@@ -14,10 +14,10 @@ import time
 
 # Info from Rogue Website
 class WebpageInfo:
-    product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')
-    #product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
-    URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
-    #URL = 'https://www.roguefitness.com/rogue-fleck-plates'
+    #product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')
+    product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+    #URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
+    URL = 'https://www.roguefitness.com/rogue-fleck-plates'
 
 
 # Personal Checkout Info
@@ -43,6 +43,7 @@ class PersonalInfo:
 def webpage_status(browser):
     browser.get(WebpageInfo.URL)
     update = 0
+    print("\nChecking Webpage Status...\n")
     while update == 0:                              #Condition for if page is updated.
         for x in WebpageInfo.product:
             try:
@@ -56,7 +57,8 @@ def webpage_status(browser):
         if update is 1:
             break
         browser.refresh()
-        time.sleep(25)          #This is the page refresh frequency in seconds. Don't refresh too often or you risk and IP ban.
+        time.sleep(20)          #This is the page refresh frequency in seconds. Don't refresh too often or you risk and IP ban.
+    print("One or more target products in stock, proceeding to checkout.\n")
     return browser
 
 
