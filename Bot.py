@@ -14,14 +14,10 @@ import time
 
 # Info from Rogue Website
 class WebpageInfo:
-    product = (#'grouped-product-item-75737',
-               'grouped-product-item-75745',
-               'grouped-product-item-75739'
-               #'grouped-product-item-75741'
-                )
-    # product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
-    URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
-    # URL = 'https://www.roguefitness.com/rogue-fleck-plates'
+    # product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')
+     product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+    # URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
+     URL = 'https://www.roguefitness.com/rogue-fleck-plates'
 
 
 # Personal Checkout Info
@@ -44,24 +40,28 @@ class PersonalInfo:
 # We will make the webdriver location a variable "browser"
 # Make sure you have the webdriver for your browser downloaded.
 
-def webpage_status():
-    browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automated_checkout_bot\chromedriver')
+def webpage_status(browser):
     browser.get(WebpageInfo.URL)
     update = 0
-    while update == 0:
+    while update == 0:                              #Condition for if page is updated.
         for x in WebpageInfo.product:
             try:
                 element = browser.find_element_by_id(x)
-                if element.is_displayed() is True:
+                # availability = browser.find_element_by_class_name('availability')
+                if element.is_displayed() is True: #and availability.is_displayed() is False:
                     update = 1
                     break
             except:
                 pass
+        if update is 1:
+            break
         browser.refresh()
-        time.sleep(15)
+        time.sleep(25)          #This is the page refresh frequency in seconds. Don't refresh too often or you risk and IP ban.
+    return browser
 
 
 def rouge_checkout(browser):
+    done = 0
     for i in WebpageInfo.product:
         try:
             quantity = browser.find_element_by_id(i)
@@ -79,6 +79,8 @@ def rouge_checkout(browser):
     add.click()
 
 # The checkout page should appear, now we must click checkout.
+#     if WebDriverWait(browser, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR,'#side-cart > div > div.cart-messages-container > div > div'))):
+#         return done is False        # Checks if there is an error message when adding items to cart.
 
     checkout = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
         (By.CSS_SELECTOR, '#side-cart > div > div.off-canvas-footer > div:nth-child(1) > div.v-col-8 > button')))
@@ -175,8 +177,13 @@ def rouge_checkout(browser):
     #     "#checkout > div > div.funneled-layout-content > div:nth-child(2) > div.add-shipping-address-container > div > "
     #     "div.main-checkout-col.main-checkout-col-right > button")
     place_order_button.click()
-    done = 1
-    return done
+
+    return done is True
 
 if __name__ == '__main__':
-    webpage_status()
+    browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automated_checkout_bot\chromedriver')
+    done = False
+    while done is False:
+        webpage_status(browser)
+        rouge_checkout(browser)
+
