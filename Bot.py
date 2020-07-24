@@ -176,13 +176,16 @@ def rouge_checkout(browser):
     # place_order_button = browser.find_element_by_css_selector(
     #     "#checkout > div > div.funneled-layout-content > div:nth-child(2) > div.add-shipping-address-container > div > "
     #     "div.main-checkout-col.main-checkout-col-right > button")
-    place_order_button.click()
 
-    return done is True
+    place_order_button.click()
+    done = 1
+
+    if done is 1:
+        print("\nThe bot successfully placed an order, check your email to verify.\n"
+              "Thank you for using my Rouge Automated Checkout Bot, hope it helped you, happy lifting!")
 
 if __name__ == '__main__':
     browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automated_checkout_bot\chromedriver')
-    # done = False
     # while done is False:
     webpage_status(browser)
     rouge_checkout(browser)
