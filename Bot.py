@@ -14,10 +14,10 @@ import time
 
 # Info from Rogue Website
 class WebpageInfo:
-    # product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')
-     product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
-    # URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
-     URL = 'https://www.roguefitness.com/rogue-fleck-plates'
+    product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')
+    #product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+    URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
+    #URL = 'https://www.roguefitness.com/rogue-fleck-plates'
 
 
 # Personal Checkout Info
@@ -139,7 +139,7 @@ def rouge_checkout(browser):
     # time.sleep(5)
 
     curr_frame = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
-        (By.XPATH, '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.49"]')))
+        (By.XPATH, '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.50"]')))
     # curr_frame = browser.find_element_by_xpath(
     #     '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.49"]')
     browser.switch_to.frame(curr_frame)
@@ -151,7 +151,7 @@ def rouge_checkout(browser):
     browser.switch_to.default_content()
 
     curr_frame = browser.find_element_by_xpath(
-        '//iframe[@src="https://core.spreedly.com/v1/embedded/cvv-frame.html?v=1.49"]')
+        '//iframe[@src="https://core.spreedly.com/v1/embedded/cvv-frame.html?v=1.50"]')
     browser.switch_to.frame(curr_frame)
     cvv_field = browser.find_element_by_id('cvv')
     cvv_field.send_keys(PersonalInfo.cvv)
