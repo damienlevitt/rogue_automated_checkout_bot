@@ -182,8 +182,8 @@ def rouge_checkout(browser):
 
 if __name__ == '__main__':
     browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automated_checkout_bot\chromedriver')
-    done = False
-    while done is False:
-        webpage_status(browser)
-        rouge_checkout(browser)
+    # done = False
+    # while done is False:
+    webpage_status(browser)
+    rouge_checkout(browser)
 
