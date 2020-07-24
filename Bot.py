@@ -14,7 +14,8 @@ import time
 
 # Info from Rogue Website
 class WebpageInfo:
-    product = ('grouped-product-item-75737', 'grouped-product-item-75739', 'grouped-product-item-75741')
+    product = ('grouped-product-item-75737', 'grouped-product-item-75745'
+               'grouped-product-item-75739', 'grouped-product-item-75741')
     # product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
     URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
     # URL = 'https://www.roguefitness.com/rogue-fleck-plates'
@@ -48,11 +49,12 @@ def webpage_status():
         for x in WebpageInfo.product:
             try:
                 element = browser.find_element_by_id(x)
-                if element.find_element_by_id(x) is not None:
+                if element.is_displayed() is True:
                     update = 1
+                    break
             except:
-                time.sleep(20)
                 browser.refresh()
+                time.sleep(15)
 
 
 def rouge_checkout(browser):
