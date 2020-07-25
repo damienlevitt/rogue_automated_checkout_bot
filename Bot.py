@@ -65,7 +65,7 @@ def twilio_purchase_alert():
         client = Client(account_sid, auth_token)
         client.messages.create(from_='TWILIO_PHONE_NUMBER',            # REQUIRED FOR TEXT ALERTS
                                to='CELL_PHONE_NUMBER',               # REQUIRED FOR TEXT ALERTS
-                               body='The Rouge Automated Checkout Bot has successfully placed your order.\n'
+                               body='The Rogue Automated Checkout Bot has successfully placed your order.\n'
                                     ' Thank you for using and please consider donating.'
                                )
     return 0
@@ -97,7 +97,7 @@ def webpage_status(browser):
     return browser
 
 
-def rouge_checkout(browser):
+def rogue_checkout(browser):
     done = 0
     for i in WebpageInfo.product:
         try:
@@ -222,11 +222,11 @@ def rouge_checkout(browser):
     twilio_purchase_alert()
     if done is 1:
         print("\nThe bot successfully placed an order, check your email to verify.\n"
-              "Thank you for using my Rouge Automated Checkout Bot, hope it helped you, happy lifting!")
+              "Thank you for using my Rogue Automated Checkout Bot, hope it helped you, happy lifting!")
 
 if __name__ == '__main__':
-    browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\rouge_automated_checkout_bot\chromedriver')
+    browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\Rogue_automated_checkout_bot\chromedriver')
     # while done is False:
     webpage_status(browser)
-    rouge_checkout(browser)
+    rogue_checkout(browser)
 
