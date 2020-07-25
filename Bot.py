@@ -49,7 +49,7 @@ def twilio_stock_alert():
         auth_token = 'TWILIO_AUTH_TOKEN'     # REQUIRED FOR TEXT ALERTS
 
         client = Client(account_sid, auth_token)
-        client.messages.create(from_='TWILIO_NUMBER',        # REQUIRED FOR TEXT ALERTS
+        client.messages.create(from_='TWILIO_PHONE_NUMBER',        # REQUIRED FOR TEXT ALERTS
                                to='CELL_PHONE_NUMBER',           # REQUIRED FOR TEXT ALERTS
                                body='One or more of the products you are watching are in stock. Proceeding to checkout.'
                                )
@@ -63,7 +63,7 @@ def twilio_purchase_alert():
         auth_token = 'TWILIO_AUTH_TOKEN'         # REQUIRED FOR TEXT ALERTS
 
         client = Client(account_sid, auth_token)
-        client.messages.create(from_='TWILIO_NUMBER',            # REQUIRED FOR TEXT ALERTS
+        client.messages.create(from_='TWILIO_PHONE_NUMBER',            # REQUIRED FOR TEXT ALERTS
                                to='CELL_PHONE_NUMBER',               # REQUIRED FOR TEXT ALERTS
                                body='The Rouge Automated Checkout Bot has successfully placed your order.\n'
                                     ' Thank you for using and please consider donating.'
@@ -78,7 +78,7 @@ def webpage_status(browser):
     browser.get(WebpageInfo.URL)
     update = 0
     print("\nChecking Webpage Status...\n")
-    while update == 0:                              #Condition for if page is updated.
+    while update == 0:                              # Condition for if page is updated.
         for x in WebpageInfo.product:
             try:
                 element = browser.find_element_by_id(x)
