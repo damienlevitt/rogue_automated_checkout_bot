@@ -57,7 +57,7 @@ def twilio_stock_alert():
 
 
 def twilio_purchase_alert():
-    optin = True       # Change this variable to get text updates with twilio only after specifying the paths.
+    optin = False       # Change this variable to get text updates with twilio only after specifying the paths.
     if optin is True:
         account_sid = 'TWILIO_ACCOUNT_ID'      # REQUIRED FOR TEXT ALERTS
         auth_token = 'TWILIO_AUTH_TOKEN'         # REQUIRED FOR TEXT ALERTS
