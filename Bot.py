@@ -1,6 +1,7 @@
 # This script requires you find the product item number of the desired item.
 # This can be done by inspecting the item in chrome and replacing the 5 digit number with that of your desired product.
 # The URL must be changed to the location of the desired product page.
+# Make sure to fill in all the REQUIRED information below.
 
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
@@ -9,42 +10,75 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+from twilio.rest import Client
 import time
+import os
 
 
 # Info from Rogue Website
 class WebpageInfo:
-    #product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')
-    product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
-    #URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'
+    #product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')    # REQUIRED
+    #URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'                                     # REQUIRED
     URL = 'https://www.roguefitness.com/rogue-fleck-plates'
+    product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
 
 
 # Personal Checkout Info
 class PersonalInfo:
-    first_name = 'FIRSTNAME'
-    last_name = 'LASTNAME'
-    address = '1234 Something Lane'
-    state = 'CA'
-    city = 'San Jose'
-    zipcode = '95219'
-    telephone_number = '4089999999'
-    email = 'jondoe@gmail.com'
-    card_number = '4111111111111111'
-    exp_month = '7'
-    exp_year = '2021'
-    cvv = '999'
+    first_name = 'FIRSTNAME'                    # REQUIRED
+    last_name = 'LASTNAME'                      # REQUIRED
+    address = '1234 Something Lane'             # REQUIRED
+    state = 'CA'                                # REQUIRED
+    city = 'San Jose'                           # REQUIRED
+    zipcode = '95219'                           # REQUIRED
+    telephone_number = '4089999999'             # REQUIRED
+    email = 'jondoe@gmail.com'                  # REQUIRED
+    card_number = '4111111111111111'            # REQUIRED
+    exp_month = '7'                             # REQUIRED
+    exp_year = '2021'                           # REQUIRED
+    cvv = '999'                                 # REQUIRED
+
+# If you have a Twilio Account and want to opt-in for text messages when your
+# item is in stock and after the item is purchased, fill in the required information below.
 
 
+def twilio_stock_alert():
+    optin = False       # Change this variable to get text updates with twilio only after specifying the paths.
+    if optin is True:
+        account_sid = 'TWILIO_ACCOUNT_ID'  # REQUIRED FOR TEXT ALERTS
+        auth_token = 'TWILIO_AUTH_TOKEN'     # REQUIRED FOR TEXT ALERTS
+
+        client = Client(account_sid, auth_token)
+        client.messages.create(from_='TWILIO_PHONE_NUMBER',        # REQUIRED FOR TEXT ALERTS
+                               to='CELL_PHONE_NUMBER',           # REQUIRED FOR TEXT ALERTS
+                               body='One or more of the products you are watching are in stock. Proceeding to checkout.'
+                               )
+    return 0
+
+
+def twilio_purchase_alert():
+    optin = False       # Change this variable to get text updates with twilio only after specifying the paths.
+    if optin is True:
+        account_sid = 'TWILIO_ACCOUNT_ID'      # REQUIRED FOR TEXT ALERTS
+        auth_token = 'TWILIO_AUTH_TOKEN'         # REQUIRED FOR TEXT ALERTS
+
+        client = Client(account_sid, auth_token)
+        client.messages.create(from_='TWILIO_PHONE_NUMBER',            # REQUIRED FOR TEXT ALERTS
+                               to='CELL_PHONE_NUMBER',               # REQUIRED FOR TEXT ALERTS
+                               body='The Rouge Automated Checkout Bot has successfully placed your order.\n'
+                                    ' Thank you for using and please consider donating.'
+                               )
+    return 0
 # Second you must specify the location of your browser executable.
 # We will make the webdriver location a variable "browser"
 # Make sure you have the webdriver for your browser downloaded.
+
 
 def webpage_status(browser):
     browser.get(WebpageInfo.URL)
     update = 0
     print("\nChecking Webpage Status...\n")
-    while update == 0:                              #Condition for if page is updated.
+    while update == 0:                              # Condition for if page is updated.
         for x in WebpageInfo.product:
             try:
                 element = browser.find_element_by_id(x)
@@ -57,8 +91,9 @@ def webpage_status(browser):
         if update is 1:
             break
         browser.refresh()
-        time.sleep(20)          #This is the page refresh frequency in seconds. Don't refresh too often or you risk and IP ban.
+        time.sleep(20)          #This is the page refresh frequency in seconds. Don't refresh too often or you risk an IP ban.
     print("One or more target products in stock, proceeding to checkout.\n")
+    twilio_stock_alert()
     return browser
 
 
@@ -67,7 +102,9 @@ def rouge_checkout(browser):
     for i in WebpageInfo.product:
         try:
             quantity = browser.find_element_by_id(i)
-            quantity.send_keys('1')                        # Change this to your desired quantity for each product
+
+            # Change this to your desired quantity for each product (default is one).
+            quantity.send_keys('1')                       # REQUIRED
         except:
             print("item", i, "was not in stock")
             pass        # Will move on to the next item if one of the items is not in stock
@@ -182,6 +219,7 @@ def rouge_checkout(browser):
     place_order_button.click()
     done = 1
 
+    twilio_purchase_alert()
     if done is 1:
         print("\nThe bot successfully placed an order, check your email to verify.\n"
               "Thank you for using my Rouge Automated Checkout Bot, hope it helped you, happy lifting!")
