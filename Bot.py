@@ -17,10 +17,10 @@ import os
 
 # Info from Rogue Website
 class WebpageInfo:
-    product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')    # REQUIRED
-    URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'                                     # REQUIRED
-    # URL = 'https://www.roguefitness.com/rogue-fleck-plates'
-    # product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+    #product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')    # REQUIRED
+    #URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'                                     # REQUIRED
+    URL = 'https://www.roguefitness.com/rogue-fleck-plates'
+    product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
 
 
 # Personal Checkout Info
@@ -43,7 +43,7 @@ class PersonalInfo:
 
 
 def twilio_stock_alert():
-    optin = True       # Change this variable to get text updates with twilio only after specifying the paths.
+    optin = False       # Change this variable to get text updates with twilio only after specifying the paths.
     if optin is True:
         account_sid = 'TWILIO_ACCOUNT_ID'  # REQUIRED FOR TEXT ALERTS
         auth_token = 'TWILIO_AUTH_TOKEN'     # REQUIRED FOR TEXT ALERTS
