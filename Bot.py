@@ -106,6 +106,8 @@ def webpage_status(browser):
     twilio_stock_alert()
     return browser
 
+# def rouge_checkout_barbell(browser):
+
 
 def rogue_checkout_plates(browser):
     done = 0
@@ -161,6 +163,9 @@ def rogue_checkout_plates(browser):
 
     email_field = browser.find_element_by_id('checkout:email')
     email_field.send_keys(PersonalInfo.email)
+
+    # One paused needed for view shipping option to become clickable.
+    time.sleep(1)
 
     # Find and click the view shipping options button.
     view_shipping_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
@@ -226,8 +231,8 @@ def rogue_checkout_plates(browser):
 
 
 if __name__ == '__main__':
-    browser = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\Rogue_automated_checkout_bot\chromedriver')
+    driver = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\Rogue_automated_checkout_bot\chromedriver')
     # while done is False:
-    webpage_status(browser)
-    rogue_checkout_plates(browser)
+    webpage_status(driver)
+    rogue_checkout_plates(driver)
 
