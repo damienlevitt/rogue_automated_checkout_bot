@@ -5,4 +5,4 @@ This bot requires you to download a webdriver for your preferred browswer to be 
 
 I recommend using chrome as it is the browser used in development and testing. Here is a link to other versions of the webdriver if you are not on Chrome verison 84. https://sites.google.com/a/chromium.org/chromedriver/downloads 
 
-This bot also requires that you add the selenium python interpreter.
+This bot also requires that you add the selenium libraries to your python interpreter.
