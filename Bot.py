@@ -210,7 +210,7 @@ def rogue_checkout_plates(browser):
 
     # Changes iframe to that of credit card number element location.
     curr_frame = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
-        (By.XPATH, '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.50"]')))
+        (By.XPATH, '//iframe[@src="https://core.spreedly.com/v1/embedded/number-frame.html?v=1.51"]')))
 
     # Selects and fills the card number section from the Personal Info.
     browser.switch_to.frame(curr_frame)
@@ -222,7 +222,7 @@ def rogue_checkout_plates(browser):
 
     # Switches to the iframe for the cvv then fills with information from Personal Info.
     curr_frame = browser.find_element_by_xpath(
-        '//iframe[@src="https://core.spreedly.com/v1/embedded/cvv-frame.html?v=1.50"]')
+        '//iframe[@src="https://core.spreedly.com/v1/embedded/cvv-frame.html?v=1.51"]')
     browser.switch_to.frame(curr_frame)
     cvv_field = browser.find_element_by_id('cvv')
     cvv_field.send_keys(PersonalInfo.cvv)
