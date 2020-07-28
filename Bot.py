@@ -32,7 +32,7 @@ class WebpageInfo:
     #product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')    # REQUIRED
     #URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'                                     # REQUIRED
     URL = 'https://www.roguefitness.com/rogue-fleck-plates'
-    product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+    product = ('grouped-product-item-85751', 'grouped-product-item-85749','grouped-product-item-85747', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
 
 
 # Personal Checkout Info
