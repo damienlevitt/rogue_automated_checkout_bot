@@ -29,10 +29,10 @@ import os
 
 # Info from Rogue Website
 class WebpageInfo:
-    #product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')    # REQUIRED
-    #URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'                                     # REQUIRED
-    URL = 'https://www.roguefitness.com/rogue-fleck-plates'
-    product = ('grouped-product-item-85751', 'grouped-product-item-85749','grouped-product-item-85747', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+    product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')    # REQUIRED
+    URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'                                     # REQUIRED
+    #URL = 'https://www.roguefitness.com/rogue-fleck-plates'
+    #product = ('grouped-product-item-85751', 'grouped-product-item-85749','grouped-product-item-85747', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
 
 
 # Personal Checkout Info
@@ -106,7 +106,7 @@ def reddit_restock_post():
     login_button.click()
     driver2.switch_to.default_content()
     textbox = WebDriverWait(driver2, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#SHORTCUT_FOCUSABLE_DIV > div:nth-child(4) > div > div > div > div._3ozFtOe6WpJEMUtxDOIvtU > div._1vyLCp-v-tE5QvZovwrASa > div._1OVBBWLtHoSPfGCRaPzpTf._3nSp9cdBpqL13CqjdMr2L_._2udhMC-jldHp_EpAuBeSR1.PaJBYLqPf_Gie2aZntVQ7 > div.uI_hDmU5GSiudtABRz_37 > div._1r4smTyOEZFO91uFIdWW6T.aUM8DQ_Nz5wL0EJc_wte6 > div:nth-child(2) > div > div > div._2baJGEALPiEMZpWB2iWQs7 > div > div:nth-child(1) > div > div > div')))
-    textbox.send_keys('Flecks in stock, go. https://www.roguefitness.com/rogue-fleck-plates')
+    textbox.send_keys('Flecks in stock, go. https://www.roguefitness.com/rogue-fleck-plates  Posted via Thread Stock Bot.')
     comment_button = driver2.find_element_by_css_selector('#SHORTCUT_FOCUSABLE_DIV > div:nth-child(4) > div > div > div > div._3ozFtOe6WpJEMUtxDOIvtU > div._1vyLCp-v-tE5QvZovwrASa > div._1OVBBWLtHoSPfGCRaPzpTf._3nSp9cdBpqL13CqjdMr2L_._2udhMC-jldHp_EpAuBeSR1.PaJBYLqPf_Gie2aZntVQ7 > div.uI_hDmU5GSiudtABRz_37 > div._1r4smTyOEZFO91uFIdWW6T.aUM8DQ_Nz5wL0EJc_wte6 > div:nth-child(2) > div > div > div._17TqawK-44tH0psnHPIhzS.RQTXfVRnnTF5ont3w58rx > div._3SNMf5ZJL_5F1qxcZkD0Cp > button')
     comment_button.click()
 
@@ -136,7 +136,8 @@ def webpage_status(browser):
 # def rouge_checkout_barbell(browser):
 
 
-def rogue_checkout_plates(browser):
+def rogue_checkout_number_select(browser):
+    webpage_status(browser)
     done = 0
     for i in WebpageInfo.product:
         try:
@@ -152,13 +153,26 @@ def rogue_checkout_plates(browser):
     add.click()                                                     # Click add to cart.
     main_checkout(browser)
 
-def rouge_checkout_box_select(browser):
+
+def rogue_checkout_box_select(browser):             # This if there is a screen where you need to select a box option (i.e barbell types and colors)
+    browser.get(WebpageInfo.URL)
+    update = 0
+    print("\nChecking Webpage Status...\n")
+    while update == 0:
+        try:
+            add = browser.find_element_by_class_name('add-to-box')  # Find add to cart element on page.
+            if add.is_displayed() is True:
+                update = 1
+        except:
+            pass
+    add.click()  # Click add to cart.
+    main_checkout(browser)
 
 
 def main_checkout(browser):
-# The checkout page should appear
-#     if WebDriverWait(browser, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR,'#side-cart > div > div.cart-messages-container > div > div'))):
-#         return done is False        # Checks if there is an error message when adding items to cart.
+    # The checkout page should appear
+    #     if WebDriverWait(browser, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR,'#side-cart > div > div.cart-messages-container > div > div'))):
+    #         return done is False        # Checks if there is an error message when adding items to cart.
 
     # Finds checkout element on the side cart.
     checkout = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
@@ -264,7 +278,7 @@ def main_checkout(browser):
 
 if __name__ == '__main__':
     driver = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\Rogue_automated_checkout_bot\chromedriver')
-    webpage_status(driver)
-    #rogue_checkout_plates(driver)
+    #rogue_checkout_number_select(driver)
+    #rogue_checkout_box_select(driver)
     reddit_restock_post()
 
