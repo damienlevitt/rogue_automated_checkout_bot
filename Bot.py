@@ -109,6 +109,7 @@ def reddit_restock_post():
     textbox.send_keys('Flecks in stock, go. https://www.roguefitness.com/rogue-fleck-plates  Posted via Thread Stock Bot.')
     comment_button = driver2.find_element_by_css_selector('#SHORTCUT_FOCUSABLE_DIV > div:nth-child(4) > div > div > div > div._3ozFtOe6WpJEMUtxDOIvtU > div._1vyLCp-v-tE5QvZovwrASa > div._1OVBBWLtHoSPfGCRaPzpTf._3nSp9cdBpqL13CqjdMr2L_._2udhMC-jldHp_EpAuBeSR1.PaJBYLqPf_Gie2aZntVQ7 > div.uI_hDmU5GSiudtABRz_37 > div._1r4smTyOEZFO91uFIdWW6T.aUM8DQ_Nz5wL0EJc_wte6 > div:nth-child(2) > div > div > div._17TqawK-44tH0psnHPIhzS.RQTXfVRnnTF5ont3w58rx > div._3SNMf5ZJL_5F1qxcZkD0Cp > button')
     comment_button.click()
+    print("Successful Post to Reddit Thread")
 
 
 def webpage_status(browser):
@@ -278,7 +279,7 @@ def main_checkout(browser):
 
 if __name__ == '__main__':
     driver = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\Rogue_automated_checkout_bot\chromedriver')
-    #rogue_checkout_number_select(driver)
+    rogue_checkout_number_select(driver)
     #rogue_checkout_box_select(driver)
     reddit_restock_post()
 
