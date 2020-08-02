@@ -29,24 +29,24 @@ import os
 
 # Info from Rogue Website
 class WebpageInfo:
-    product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')    # REQUIRED
-    URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'                                     # REQUIRED
-    #URL = 'https://www.roguefitness.com/rogue-fleck-plates'
-    #product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
+    #product = ('grouped-product-item-75745', 'grouped-product-item-75739', 'grouped-product-item-75741')    # REQUIRED
+    #URL = 'https://www.roguefitness.com/rogue-add-on-change-plate-pair'                                     # REQUIRED
+    URL = 'https://www.roguefitness.com/rogue-fleck-plates'
+    product = ('grouped-product-item-85751', 'grouped-product-item-85749', 'grouped-product-item-85745', 'grouped-product-item-85743', 'grouped-product-item-85741')
 
 
 # Personal Checkout Info
 class PersonalInfo:
     first_name = 'FIRSTNAME'                    # REQUIRED
     last_name = 'LASTNAME'                      # REQUIRED
-    address = '1234 Something Lane'             # REQUIRED
+    address = '1234 SOMETHING LANE'             # REQUIRED
     state = 'CA'                                # REQUIRED
-    city = 'San Jose'                           # REQUIRED
-    zipcode = '95219'                           # REQUIRED
+    city = 'SAN JOSE'                           # REQUIRED
+    zipcode = '95112'                           # REQUIRED
     telephone_number = '4089999999'             # REQUIRED
-    email = 'jondoe@gmail.com'                  # REQUIRED
+    email = 'JONDOE@GMAIL.COM'                  # REQUIRED
     card_number = '4111111111111111'            # REQUIRED
-    exp_month = '7'                             # REQUIRED
+    exp_month = '8'                             # REQUIRED
     exp_year = '2021'                           # REQUIRED
     cvv = '999'                                 # REQUIRED
 
@@ -86,7 +86,7 @@ def twilio_purchase_alert():
 
 
 def reddit_restock_post():
-    thread = 'https://www.reddit.com/r/homegym/comments/hx101e/stock_and_shipping_thread_24_july_2020/'
+    thread = 'https://www.reddit.com/r/homegym/comments/hx101e/stock_and_shipping_thread_31_july_2020/'
     chrome_options = Options()
     chrome_options.add_experimental_option("prefs", {'profile.default_content_setting_values.notifications': 2})
     driver2 = webdriver.Chrome(chrome_options=chrome_options)
@@ -106,7 +106,7 @@ def reddit_restock_post():
     login_button.click()
     driver2.switch_to.default_content()
     textbox = WebDriverWait(driver2, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#SHORTCUT_FOCUSABLE_DIV > div:nth-child(4) > div > div > div > div._3ozFtOe6WpJEMUtxDOIvtU > div._1vyLCp-v-tE5QvZovwrASa > div._1OVBBWLtHoSPfGCRaPzpTf._3nSp9cdBpqL13CqjdMr2L_._2udhMC-jldHp_EpAuBeSR1.PaJBYLqPf_Gie2aZntVQ7 > div.uI_hDmU5GSiudtABRz_37 > div._1r4smTyOEZFO91uFIdWW6T.aUM8DQ_Nz5wL0EJc_wte6 > div:nth-child(2) > div > div > div._2baJGEALPiEMZpWB2iWQs7 > div > div:nth-child(1) > div > div > div')))
-    textbox.send_keys('Flecks in stock, go. https://www.roguefitness.com/rogue-fleck-plates  Posted via Thread Stock Bot.')
+    textbox.send_keys('Flecks in stock, go. https://www.roguefitness.com/rogue-fleck-plates  Posted via Thread Fleck Bot.')
     comment_button = driver2.find_element_by_css_selector('#SHORTCUT_FOCUSABLE_DIV > div:nth-child(4) > div > div > div > div._3ozFtOe6WpJEMUtxDOIvtU > div._1vyLCp-v-tE5QvZovwrASa > div._1OVBBWLtHoSPfGCRaPzpTf._3nSp9cdBpqL13CqjdMr2L_._2udhMC-jldHp_EpAuBeSR1.PaJBYLqPf_Gie2aZntVQ7 > div.uI_hDmU5GSiudtABRz_37 > div._1r4smTyOEZFO91uFIdWW6T.aUM8DQ_Nz5wL0EJc_wte6 > div:nth-child(2) > div > div > div._17TqawK-44tH0psnHPIhzS.RQTXfVRnnTF5ont3w58rx > div._3SNMf5ZJL_5F1qxcZkD0Cp > button')
     comment_button.click()
     print("Successful Post to Reddit Thread")
@@ -129,7 +129,7 @@ def webpage_status(browser):
         if update is 1:
             break
         browser.refresh()
-        time.sleep(20)   # This is the page refresh frequency in seconds. Don't refresh too often or you risk an IP ban.
+        time.sleep(10)   # This is the page refresh frequency in seconds. Don't refresh too often or you risk an IP ban.
     print("One or more target products in stock, proceeding to checkout.\n")
     twilio_stock_alert()
     return browser
@@ -152,7 +152,8 @@ def rogue_checkout_number_select(browser):
 
     add = browser.find_element_by_class_name('add-to-box')          # Find add to cart element on page.
     add.click()                                                     # Click add to cart.
-    main_checkout(browser)
+    #guest_checkout(browser)
+    account_checkout(browser)
 
 
 def rogue_checkout_box_select(browser):             # This if there is a screen where you need to select a box option (i.e barbell types and colors)
@@ -167,10 +168,46 @@ def rogue_checkout_box_select(browser):             # This if there is a screen 
         except:
             pass
     add.click()  # Click add to cart.
-    main_checkout(browser)
+    #guest_checkout(browser)
+    account_checkout(browser)
 
 
-def main_checkout(browser):
+def account_checkout(browser):
+    # Finds checkout element on the side cart.
+    checkout = WebDriverWait(browser, 10).until(EC.element_to_be_clickable(
+        (By.CSS_SELECTOR, '#side-cart > div > div.off-canvas-footer > div:nth-child(1) > div.v-col-8 > button')))
+    checkout.click()        # Clicks checkout element.
+
+    # Enter email and password for account
+    email_elem = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[6]/div/div/div/div[1]/div[1]/div[3]/div/div[2]/div[2]/div[2]/div/div[2]/div[1]/form/div[1]/input')))
+    email_elem.send_keys('ROGUE-ACCOUNT-EMAIL')
+    password_elem = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[6]/div/div/div/div[1]/div[1]/div[3]/div/div[2]/div[2]/div[2]/div/div[2]/div[1]/form/div[2]/input')))
+    password_elem.send_keys('ROGUE-ACCOUNT-PASSWORD!')
+    sign_in_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[6]/div/div/div/div[1]/div[1]/div[3]/div/div[2]/div[2]/div[2]/div/div[2]/div[1]/form/button')))
+    sign_in_button.click()
+
+    # Find view shipping options button and click.
+    view_ship_but = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[6]/div/div/div/div[1]/div[1]/div[3]/div/div[2]/div[2]/div[2]/div/div[2]/div[2]/div[2]/div/div[1]/div/button')))
+    view_ship_but.click()
+
+    # Find and click the continue to payment button.
+    cont_pay_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[6]/div/div/div/div[1]/div[1]/div[3]/div/div[2]/div[2]/div[2]/div/div[2]/div[2]/div[2]/div/div[1]/div/button')))
+    cont_pay_button.click()
+
+    # Find and click continue to review button.
+    cont_to_review = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[6]/div/div/div/div[1]/div[1]/div[3]/div/div[2]/div[2]/div[2]/div/div[2]/div[2]/div[2]/div/div[1]/div/button')))
+    cont_to_review.click()
+
+    # Find place order button and click.
+    place_order = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[6]/div/div/div/div[1]/div[1]/div[3]/div/div[2]/div[2]/div[2]/div/div[2]/div[3]/div[2]/div/div[1]/div/button')))
+    place_order.click()
+
+    twilio_purchase_alert()
+    print("\nThe bot successfully placed an order, check your email to verify.\n"
+          "Thank you for using my Rogue Automated Checkout Bot, hope it helped you, happy lifting!")
+
+
+def guest_checkout(browser):
     # The checkout page should appear
     #     if WebDriverWait(browser, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR,'#side-cart > div > div.cart-messages-container > div > div'))):
     #         return done is False        # Checks if there is an error message when adding items to cart.
@@ -281,5 +318,6 @@ if __name__ == '__main__':
     driver = webdriver.Chrome(r'C:\Users\damie\Documents\GitHub\Rogue_automated_checkout_bot\chromedriver')
     rogue_checkout_number_select(driver)
     #rogue_checkout_box_select(driver)
-    reddit_restock_post()
+    #webpage_status(driver)
+    #reddit_restock_post()
 
